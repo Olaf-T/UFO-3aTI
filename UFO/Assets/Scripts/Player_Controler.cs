@@ -12,9 +12,11 @@ public class Player_Controler : MonoBehaviour
     public Text winText;
     void Start()
     {
+        Audiomanager.instance.PlayMusic("music");
         rigidbody2D = GetComponent<Rigidbody2D>();
         Score = 0;
         winText.gameObject.SetActive(false);
+
     }
     private void FixedUpdate()
     {

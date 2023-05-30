@@ -1,23 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class AudioManager : MonoBehaviour
+public class Audiomanager : MonoBehaviour
 {
-    public Sound[] music;
-    public Sound[] ufo_move;
-    public Sound[] coin_pickup;
-    public Sound[] wall_hit;
-    public AudioSource musicSource;
-    public AudioSource sfxSource;
+    public Sound[] music, SFX;
+    public AudioSource musicSource, sfxSource;
 
-    void Start()
+
+    public static Audiomanager instance;
+
+
+    public void Awake()
     {
-
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    void Update()
-    {
 
+    public void PlayMusic (string name)
+    {
+        Sound s = Array.Find(music, x => x.name == name);
+        if (s == null)
+        {
+            Debug.Log("Sound not found");
+
+        }
+        else
+        {
+            musicSource.clip = s.audioClip;
+            musicSource.Play();
+        }
+
+    }
+    public void PlaySFX (string name)
+    {
+        Sound s = Array.Find(SFX, x => x.name == name);
+        if (s == null)
+        {
+            Debug.Log("Sound not found");
+
+        }
+        else
+        {
+            sfxSource.clip = s.audioClip;
+            sfxSource.PlayOneShot(s.audioClip);
+        }
     }
 }
